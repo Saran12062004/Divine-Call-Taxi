@@ -423,7 +423,7 @@ export default function App() {
           <div className="contact-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 60, alignItems: "start" }}>
             <div>
               {[
-                [<Phone style={{ width: 20, height: 20 }} />, "Phone", "+91 98765 43210"],
+                [<Phone style={{ width: 20, height: 20 }} />, "Phone", "+91 8870743526"],
                 [<Mail style={{ width: 20, height: 20 }} />, "Email", "saravananashokan543@gmail.com"],
                 [<MapPin style={{ width: 20, height: 20 }} />, "Service Area", "Available across the city"],
               ].map(([icon, label, val]) => (
@@ -496,7 +496,7 @@ export default function App() {
             </div>
             {[
               ["Quick Links", NAV],
-              ["Contact", ["+91 98765 43210", "saravananashokan543@gmail.com", "Available 24/7"]],
+              ["Contact", ["+91 8870743526", "saravananashokan543@gmail.com", "Available 24/7"]],
             ].map(([title, items]) => (
               <div key={String(title)}>
                 <h4 style={{ fontWeight: 800, marginBottom: 16, color: C.yellow, fontSize: 15 }}>{String(title)}</h4>
