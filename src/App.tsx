@@ -246,6 +246,33 @@ export default function App() {
             </div>
           </div>
 
+          <div>
+          {/* Taxi illustration with rooftop sign */}
+          <div style={{ marginBottom: 24, display: "flex", justifyContent: "center" }}>
+            <svg viewBox="0 0 520 260" style={{ width: "100%", maxWidth: 420, height: "auto" }} xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="260" cy="235" rx="200" ry="14" fill="rgba(0,0,0,0.35)" />
+              <path d="M40,190 L40,165 Q40,150 55,145 L120,130 L150,95 Q165,80 190,80 L330,80 Q355,80 370,95 L400,130 L465,145 Q480,150 480,165 L480,190 Z" fill="#FFC700" stroke="#1A1A1A" strokeWidth="4" />
+              <path d="M160,125 L185,95 Q195,88 205,88 L250,88 L250,125 Z" fill="#1A1A2E" />
+              <path d="M262,88 L310,88 Q322,88 332,95 L358,125 L262,125 Z" fill="#1A1A2E" />
+              <rect x="253" y="86" width="6" height="42" fill="#1A1A1A" />
+              {Array.from({ length: 22 }).map((_, i) => (
+                <rect key={i} x={45 + i * 20} y={172} width="20" height="12" fill={i % 2 === 0 ? "#1A1A1A" : "#FFC700"} />
+              ))}
+              <rect x="300" y="150" width="18" height="5" rx="2" fill="#1A1A1A" />
+              <ellipse cx="472" cy="168" rx="7" ry="10" fill="#FFF7CC" />
+              <rect x="42" y="160" width="6" height="16" rx="2" fill="#E63946" />
+              <rect x="36" y="182" width="14" height="14" rx="4" fill="#1A1A1A" />
+              <rect x="470" y="182" width="14" height="14" rx="4" fill="#1A1A1A" />
+              <circle cx="140" cy="196" r="32" fill="#1A1A1A" />
+              <circle cx="140" cy="196" r="14" fill="#ddd" />
+              <circle cx="390" cy="196" r="32" fill="#1A1A1A" />
+              <circle cx="390" cy="196" r="14" fill="#ddd" />
+              <rect x="200" y="45" width="120" height="38" rx="8" fill="#0D0D0D" stroke="#FFC700" strokeWidth="3" />
+              <text x="260" y="60" textAnchor="middle" fontSize="9" fontWeight="700" fill="#FFC700" letterSpacing="1.5">DIVINE</text>
+              <text x="260" y="76" textAnchor="middle" fontSize="13" fontWeight="900" fill="#FFFFFF">CALL TAXI</text>
+            </svg>
+          </div>
+
           {/* Booking mini-card (premium) */}
           <div style={{ background: T.surface, borderRadius: 24, padding: 36, boxShadow: "0 20px 60px rgba(0,0,0,0.4)" }}>
             <h3 style={{ fontSize: 20, fontWeight: 800, color: T.text, marginBottom: 22 }}>Quick Booking</h3>
@@ -264,6 +291,7 @@ export default function App() {
                 Find Nearby Cars
               </button>
             </div>
+          </div>
           </div>
         </div>
       </section>
