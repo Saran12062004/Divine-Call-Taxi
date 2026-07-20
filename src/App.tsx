@@ -179,6 +179,27 @@ export default function App() {
         .driving-car svg{ display:block; animation: carHop 0.25s ease-in-out infinite alternate; filter: drop-shadow(0 6px 10px rgba(0,0,0,0.4)); }
         @keyframes driveAcross{ 0%{ left:-60px; } 100%{ left: calc(100% + 60px); } }
         @keyframes carHop{ from{ transform: translateY(0); } to{ transform: translateY(-3px); } }
+
+        .taxi-stage{ perspective: 1000px; }
+        .taxi-3d{
+          transform-style: preserve-3d;
+          filter: drop-shadow(0 25px 35px rgba(0,0,0,0.55));
+          animation: carEntrance 1.1s cubic-bezier(.2,.8,.2,1) both, carIdle 5s ease-in-out 1.1s infinite;
+        }
+        @keyframes carEntrance{
+          0%{ transform: translateX(-70px) rotateY(30deg) scale(0.88); opacity:0; }
+          100%{ transform: translateX(0) rotateY(-8deg) scale(1); opacity:1; }
+        }
+        @keyframes carIdle{
+          0%,100%{ transform: translateY(0) rotateY(-8deg) rotateX(1deg); }
+          50%{ transform: translateY(-10px) rotateY(-3deg) rotateX(-1deg); }
+        }
+        .spotlight-glow{ animation: glowPulse 3s ease-in-out infinite; transform-origin: center; }
+        @keyframes glowPulse{ 0%,100%{ opacity:0.55; } 50%{ opacity:0.9; } }
+        .headlight-glow{ animation: headlightPulse 2s ease-in-out infinite; transform-origin: center; }
+        @keyframes headlightPulse{ 0%,100%{ opacity:0.6; } 50%{ opacity:1; } }
+        .shine-rect{ animation: shineSweep 3.4s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+        @keyframes shineSweep{ 0%{ transform: translateX(-40px) skewX(-20deg); } 55%,100%{ transform: translateX(640px) skewX(-20deg); } }
       `}</style>
 
       {/* MOBILE APP-STYLE BOTTOM TAB BAR */}
@@ -247,30 +268,89 @@ export default function App() {
           </div>
 
           <div>
-          {/* Taxi illustration with rooftop sign */}
-          <div style={{ marginBottom: 24, display: "flex", justifyContent: "center" }}>
-            <svg viewBox="0 0 520 260" style={{ width: "100%", maxWidth: 420, height: "auto" }} xmlns="http://www.w3.org/2000/svg">
-              <ellipse cx="260" cy="235" rx="200" ry="14" fill="rgba(0,0,0,0.35)" />
-              <path d="M40,190 L40,165 Q40,150 55,145 L120,130 L150,95 Q165,80 190,80 L330,80 Q355,80 370,95 L400,130 L465,145 Q480,150 480,165 L480,190 Z" fill="#FFC700" stroke="#1A1A1A" strokeWidth="4" />
-              <path d="M160,125 L185,95 Q195,88 205,88 L250,88 L250,125 Z" fill="#1A1A2E" />
-              <path d="M262,88 L310,88 Q322,88 332,95 L358,125 L262,125 Z" fill="#1A1A2E" />
-              <rect x="253" y="86" width="6" height="42" fill="#1A1A1A" />
-              {Array.from({ length: 22 }).map((_, i) => (
-                <rect key={i} x={45 + i * 20} y={172} width="20" height="12" fill={i % 2 === 0 ? "#1A1A1A" : "#FFC700"} />
-              ))}
-              <rect x="300" y="150" width="18" height="5" rx="2" fill="#1A1A1A" />
-              <ellipse cx="472" cy="168" rx="7" ry="10" fill="#FFF7CC" />
-              <rect x="42" y="160" width="6" height="16" rx="2" fill="#E63946" />
-              <rect x="36" y="182" width="14" height="14" rx="4" fill="#1A1A1A" />
-              <rect x="470" y="182" width="14" height="14" rx="4" fill="#1A1A1A" />
-              <circle cx="140" cy="196" r="32" fill="#1A1A1A" />
-              <circle cx="140" cy="196" r="14" fill="#ddd" />
-              <circle cx="390" cy="196" r="32" fill="#1A1A1A" />
-              <circle cx="390" cy="196" r="14" fill="#ddd" />
-              <rect x="200" y="45" width="120" height="38" rx="8" fill="#0D0D0D" stroke="#FFC700" strokeWidth="3" />
-              <text x="260" y="60" textAnchor="middle" fontSize="9" fontWeight="700" fill="#FFC700" letterSpacing="1.5">DIVINE</text>
-              <text x="260" y="76" textAnchor="middle" fontSize="13" fontWeight="900" fill="#FFFFFF">CALL TAXI</text>
-            </svg>
+          {/* Cinematic 3D taxi illustration with rooftop sign */}
+          <div className="taxi-stage" style={{ marginBottom: 24, display: "flex", justifyContent: "center" }}>
+            <div className="taxi-3d" style={{ width: "100%", maxWidth: 420 }}>
+              <svg viewBox="0 0 520 260" style={{ width: "100%", height: "auto", overflow: "visible" }} xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="bodyGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#FFE680" />
+                    <stop offset="45%" stopColor="#FFC700" />
+                    <stop offset="100%" stopColor="#D99900" />
+                  </linearGradient>
+                  <linearGradient id="glassGrad" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stopColor="#5A6C99" />
+                    <stop offset="55%" stopColor="#1A1A2E" />
+                    <stop offset="100%" stopColor="#0A0A14" />
+                  </linearGradient>
+                  <radialGradient id="rimGrad" cx="35%" cy="35%" r="65%">
+                    <stop offset="0%" stopColor="#fafafa" />
+                    <stop offset="100%" stopColor="#9a9a9a" />
+                  </radialGradient>
+                  <radialGradient id="spotGrad" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stopColor="#FFC700" stopOpacity="0.55" />
+                    <stop offset="100%" stopColor="#FFC700" stopOpacity="0" />
+                  </radialGradient>
+                  <radialGradient id="headGlow" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stopColor="#FFFDE7" stopOpacity="0.95" />
+                    <stop offset="100%" stopColor="#FFFDE7" stopOpacity="0" />
+                  </radialGradient>
+                  <linearGradient id="shineGrad" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stopColor="#ffffff" stopOpacity="0" />
+                    <stop offset="50%" stopColor="#ffffff" stopOpacity="0.6" />
+                    <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
+                  </linearGradient>
+                  <linearGradient id="reflFade" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#ffffff" stopOpacity="0.4" />
+                    <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
+                  </linearGradient>
+                  <mask id="reflMask"><rect x="0" y="0" width="520" height="260" fill="url(#reflFade)" /></mask>
+                  <clipPath id="bodyClip">
+                    <path d="M40,190 L40,165 Q40,150 55,145 L120,130 L150,95 Q165,80 190,80 L330,80 Q355,80 370,95 L400,130 L465,145 Q480,150 480,165 L480,190 Z" />
+                  </clipPath>
+                  <clipPath id="reflClip"><rect x="0" y="228" width="520" height="55" /></clipPath>
+                </defs>
+
+                {/* Cinematic spotlight glow */}
+                <ellipse className="spotlight-glow" cx="260" cy="165" rx="230" ry="120" fill="url(#spotGrad)" />
+                {/* Ground contact shadow */}
+                <ellipse cx="260" cy="235" rx="200" ry="14" fill="rgba(0,0,0,0.45)" />
+                {/* Mirrored reflection (clipped to a short puddle strip below the wheels) */}
+                <g clipPath="url(#reflClip)">
+                  <use href="#carGroup" transform="translate(0,460) scale(1,-1)" mask="url(#reflMask)" opacity="0.4" />
+                </g>
+
+                <g id="carGroup">
+                  <path d="M40,190 L40,165 Q40,150 55,145 L120,130 L150,95 Q165,80 190,80 L330,80 Q355,80 370,95 L400,130 L465,145 Q480,150 480,165 L480,190 Z" fill="url(#bodyGrad)" stroke="#1A1A1A" strokeWidth="4" />
+                  <path d="M160,125 L185,95 Q195,88 205,88 L250,88 L250,125 Z" fill="url(#glassGrad)" />
+                  <path d="M262,88 L310,88 Q322,88 332,95 L358,125 L262,125 Z" fill="url(#glassGrad)" />
+                  <rect x="253" y="86" width="6" height="42" fill="#1A1A1A" />
+                  {Array.from({ length: 22 }).map((_, i) => (
+                    <rect key={i} x={45 + i * 20} y={172} width="20" height="12" fill={i % 2 === 0 ? "#1A1A1A" : "#FFC700"} />
+                  ))}
+                  <rect x="300" y="150" width="18" height="5" rx="2" fill="#1A1A1A" />
+                  <ellipse cx="472" cy="168" rx="7" ry="10" fill="#FFF7CC" />
+                  <rect x="42" y="160" width="6" height="16" rx="2" fill="#E63946" />
+                  <rect x="36" y="182" width="14" height="14" rx="4" fill="#1A1A1A" />
+                  <rect x="470" y="182" width="14" height="14" rx="4" fill="#1A1A1A" />
+                  <circle cx="140" cy="196" r="32" fill="#1A1A1A" />
+                  <circle cx="140" cy="196" r="14" fill="url(#rimGrad)" />
+                  <circle cx="390" cy="196" r="32" fill="#1A1A1A" />
+                  <circle cx="390" cy="196" r="14" fill="url(#rimGrad)" />
+                  <rect x="200" y="45" width="120" height="38" rx="8" fill="#0D0D0D" stroke="#FFC700" strokeWidth="3" />
+                  <text x="260" y="60" textAnchor="middle" fontSize="9" fontWeight="700" fill="#FFC700" letterSpacing="1.5">DIVINE</text>
+                  <text x="260" y="76" textAnchor="middle" fontSize="13" fontWeight="900" fill="#FFFFFF">CALL TAXI</text>
+                </g>
+
+                {/* Glossy shine sweep, clipped to car body */}
+                <g clipPath="url(#bodyClip)">
+                  <rect className="shine-rect" x="-160" y="60" width="70" height="200" fill="url(#shineGrad)" />
+                </g>
+
+                {/* Headlight glow */}
+                <circle className="headlight-glow" cx="472" cy="168" r="26" fill="url(#headGlow)" />
+              </svg>
+            </div>
           </div>
 
           {/* Booking mini-card (premium) */}
