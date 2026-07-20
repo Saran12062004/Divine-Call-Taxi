@@ -200,6 +200,8 @@ export default function App() {
         @keyframes headlightPulse{ 0%,100%{ opacity:0.6; } 50%{ opacity:1; } }
         .shine-rect{ animation: shineSweep 3.4s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
         @keyframes shineSweep{ 0%{ transform: translateX(-40px) skewX(-20deg); } 55%,100%{ transform: translateX(640px) skewX(-20deg); } }
+        .speed-lines{ animation: speedPulse 1.1s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+        @keyframes speedPulse{ 0%,100%{ transform: translateX(0); opacity:0.7; } 50%{ transform: translateX(-10px); opacity:1; } }
       `}</style>
 
       {/* MOBILE APP-STYLE BOTTOM TAB BAR */}
@@ -306,13 +308,35 @@ export default function App() {
                   </linearGradient>
                   <mask id="reflMask"><rect x="0" y="0" width="520" height="260" fill="url(#reflFade)" /></mask>
                   <clipPath id="bodyClip">
-                    <path d="M40,190 L40,165 Q40,150 55,145 L120,130 L150,95 Q165,80 190,80 L330,80 Q355,80 370,95 L400,130 L465,145 Q480,150 480,165 L480,190 Z" />
+                    <path d="M65,190 L65,168 Q65,150 85,145 L115,140 L150,90 Q165,75 185,72 L330,70 Q355,70 368,82 L400,118 L440,138 Q465,148 470,165 L470,190 Z" />
                   </clipPath>
                   <clipPath id="reflClip"><rect x="0" y="228" width="520" height="55" /></clipPath>
+                  <linearGradient id="swooshGrad1" x1="0%" y1="100%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#FFC700" stopOpacity="0" />
+                    <stop offset="50%" stopColor="#FFC700" stopOpacity="0.8" />
+                    <stop offset="100%" stopColor="#FFC700" stopOpacity="0" />
+                  </linearGradient>
+                  <linearGradient id="swooshGrad2" x1="0%" y1="100%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#FFE680" stopOpacity="0" />
+                    <stop offset="50%" stopColor="#FFE680" stopOpacity="0.5" />
+                    <stop offset="100%" stopColor="#FFE680" stopOpacity="0" />
+                  </linearGradient>
                 </defs>
 
                 {/* Cinematic spotlight glow */}
                 <ellipse className="spotlight-glow" cx="260" cy="165" rx="230" ry="120" fill="url(#spotGrad)" />
+
+                {/* Dynamic swoosh ribbons — "Swift" motion energy */}
+                <path d="M15,225 Q150,50 330,65 Q430,76 495,145" stroke="url(#swooshGrad1)" strokeWidth="22" strokeLinecap="round" fill="none" />
+                <path d="M35,215 Q160,72 320,85 Q405,94 465,150" stroke="url(#swooshGrad2)" strokeWidth="10" strokeLinecap="round" fill="none" />
+
+                {/* Speed lines trailing behind */}
+                <g className="speed-lines" opacity="0.7">
+                  <line x1="-15" y1="200" x2="40" y2="190" stroke="#FFC700" strokeWidth="5" strokeLinecap="round" />
+                  <line x1="-25" y1="216" x2="30" y2="206" stroke="#FFC700" strokeWidth="5" strokeLinecap="round" opacity="0.7" />
+                  <line x1="-35" y1="232" x2="20" y2="222" stroke="#FFC700" strokeWidth="5" strokeLinecap="round" opacity="0.45" />
+                </g>
+
                 {/* Ground contact shadow */}
                 <ellipse cx="260" cy="235" rx="200" ry="14" fill="rgba(0,0,0,0.45)" />
                 {/* Mirrored reflection (clipped to a short puddle strip below the wheels) */}
@@ -321,25 +345,25 @@ export default function App() {
                 </g>
 
                 <g id="carGroup">
-                  <path d="M40,190 L40,165 Q40,150 55,145 L120,130 L150,95 Q165,80 190,80 L330,80 Q355,80 370,95 L400,130 L465,145 Q480,150 480,165 L480,190 Z" fill="url(#bodyGrad)" stroke="#1A1A1A" strokeWidth="4" />
-                  <path d="M160,125 L185,95 Q195,88 205,88 L250,88 L250,125 Z" fill="url(#glassGrad)" />
-                  <path d="M262,88 L310,88 Q322,88 332,95 L358,125 L262,125 Z" fill="url(#glassGrad)" />
-                  <rect x="253" y="86" width="6" height="42" fill="#1A1A1A" />
-                  {Array.from({ length: 22 }).map((_, i) => (
-                    <rect key={i} x={45 + i * 20} y={172} width="20" height="12" fill={i % 2 === 0 ? "#1A1A1A" : "#FFC700"} />
+                  <path d="M65,190 L65,168 Q65,150 85,145 L115,140 L150,90 Q165,75 185,72 L330,70 Q355,70 368,82 L400,118 L440,138 Q465,148 470,165 L470,190 Z" fill="url(#bodyGrad)" stroke="#1A1A1A" strokeWidth="4" />
+                  <path d="M135,136 L158,95 Q165,88 176,88 L201,88 L201,136 Z" fill="url(#glassGrad)" />
+                  <path d="M213,88 L306,88 Q318,88 328,96 L356,136 L213,136 Z" fill="url(#glassGrad)" />
+                  <rect x="204" y="86" width="6" height="50" fill="#1A1A1A" />
+                  {Array.from({ length: 19 }).map((_, i) => (
+                    <rect key={i} x={71 + i * 20} y={172} width="20" height="12" fill={i % 2 === 0 ? "#1A1A1A" : "#FFC700"} />
                   ))}
-                  <rect x="300" y="150" width="18" height="5" rx="2" fill="#1A1A1A" />
-                  <ellipse cx="472" cy="168" rx="7" ry="10" fill="#FFF7CC" />
-                  <rect x="42" y="160" width="6" height="16" rx="2" fill="#E63946" />
-                  <rect x="36" y="182" width="14" height="14" rx="4" fill="#1A1A1A" />
-                  <rect x="470" y="182" width="14" height="14" rx="4" fill="#1A1A1A" />
-                  <circle cx="140" cy="196" r="32" fill="#1A1A1A" />
-                  <circle cx="140" cy="196" r="14" fill="url(#rimGrad)" />
-                  <circle cx="390" cy="196" r="32" fill="#1A1A1A" />
-                  <circle cx="390" cy="196" r="14" fill="url(#rimGrad)" />
-                  <rect x="200" y="45" width="120" height="38" rx="8" fill="#0D0D0D" stroke="#FFC700" strokeWidth="3" />
-                  <text x="260" y="60" textAnchor="middle" fontSize="9" fontWeight="700" fill="#FFC700" letterSpacing="1.5">DIVINE</text>
-                  <text x="260" y="76" textAnchor="middle" fontSize="13" fontWeight="900" fill="#FFFFFF">CALL TAXI</text>
+                  <rect x="315" y="150" width="18" height="5" rx="2" fill="#1A1A1A" />
+                  <ellipse cx="463" cy="168" rx="7" ry="10" fill="#FFF7CC" />
+                  <rect x="67" y="160" width="6" height="16" rx="2" fill="#E63946" />
+                  <rect x="61" y="182" width="14" height="14" rx="4" fill="#1A1A1A" />
+                  <rect x="458" y="182" width="14" height="14" rx="4" fill="#1A1A1A" />
+                  <circle cx="150" cy="196" r="32" fill="#1A1A1A" />
+                  <circle cx="150" cy="196" r="14" fill="url(#rimGrad)" />
+                  <circle cx="385" cy="196" r="32" fill="#1A1A1A" />
+                  <circle cx="385" cy="196" r="14" fill="url(#rimGrad)" />
+                  <rect x="197" y="45" width="120" height="38" rx="8" fill="#0D0D0D" stroke="#FFC700" strokeWidth="3" />
+                  <text x="257" y="60" textAnchor="middle" fontSize="9" fontWeight="700" fill="#FFC700" letterSpacing="1.5">DIVINE</text>
+                  <text x="257" y="76" textAnchor="middle" fontSize="13" fontWeight="900" fill="#FFFFFF">CALL TAXI</text>
                 </g>
 
                 {/* Glossy shine sweep, clipped to car body */}
@@ -348,7 +372,7 @@ export default function App() {
                 </g>
 
                 {/* Headlight glow */}
-                <circle className="headlight-glow" cx="472" cy="168" r="26" fill="url(#headGlow)" />
+                <circle className="headlight-glow" cx="463" cy="168" r="26" fill="url(#headGlow)" />
               </svg>
             </div>
           </div>
